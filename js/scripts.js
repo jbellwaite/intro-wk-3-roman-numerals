@@ -1,9 +1,9 @@
-// Back-end, business logic
-
+/*// Back-end, business logic
 var newString = [""];
 var i = "I";
 var v = "V";
 var x = "X";
+
 
 function romanNumeralize(input){
   var number = parseInt(input);
@@ -16,14 +16,12 @@ function romanNumeralize(input){
   var fours = 4;
   // var newI = i.slice();
 
-  
-
   if (number <= 3 ){
-    var newNumber = i.repeat(snumber);
+    var newNumber = i.repeat(number);
 
   } else if (number === 4) {
     var newNumber = (four);
-
+//
   } else if (number >= 5 && number <= 8 ) {
     var newNumber = v + (i.repeat(a));
 
@@ -53,5 +51,33 @@ $(document).ready(function() {
     var input = $("#input").val();
     var number = romanNumeralize(input);
     $("#output").text(newString.join(" "));
+  });
+});*/
+
+var numeralCodes = [["","I","II","III","IV","V","VI","VII","VIII","IX"],         // Ones
+                    ["","X","XX","XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"],   // Tens
+                    ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM"], // Hundreds
+                    ["", "M", "MM", "MMM"]];        // Thousands
+
+function romanNumeralize(num) {
+  var newString = "";
+  var digits = num.toString().split('').reverse();
+  for (var i=0; i < digits.length; i++){
+    newString = numeralCodes[i][parseInt(digits[i])] + newString;
+  }
+  return newString;
+}
+
+// User-interface
+$(document).ready(function() {
+  $("form").submit(function(event) {
+    event.preventDefault();
+    var input = $("#input").val();
+    var newString = romanNumeralize(input);
+    if (input >= 4000 || input <= 0) {
+      alert("Enter a number greater than 0 but less than 4000");
+    } else {
+    $("#output").text(newString);
+    }
   });
 });
